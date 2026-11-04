@@ -1,0 +1,35 @@
+.venv/
+node_modules/
+frontend/node_modules/
+frontend/dist/
+data/
+models/
+.env
+__pycache__/
+.pytest_cache/
+*.pyc
+work/
+
+# Local secrets and machine-specific files
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+Thumbs.db
+
+# Generated validation outputs and internal work logs
+deliverables/
+deliverables-*.xml
+*.tsbuildinfo
+task_plan.md
+findings.md
+progress.md
+research-map-qa.png
+research-map-mobile-qa.png
+
+# Keep source code and documentation in the published repository.
+samples/
+research-*.json
+PDF转PPT产品与技术清单_2026-10-26.json
+research-map-preview.html

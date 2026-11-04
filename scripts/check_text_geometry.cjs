@@ -1,0 +1,11 @@
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..'),ts=require(path.join(root,'frontend/node_modules/typescript'));
+const code=ts.transpileModule(fs.readFileSync(path.join(root,'frontend/src/textGeometry.ts'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
+const exportsObject={};vm.runInNewContext(code,{exports:exportsObject});const {fitTextBounds}=exportsObject;
+const original={kind:'text',text:'small',width:20,height:8,font_size:48,char_spacing:1};
+const grown=fitTextBounds(original,t=>t.length*24);assert(grown.height>=62.4&&grown.width>=136);assert(original.height===8);
+const multiline=fitTextBounds({...original,text:'a\nb'},()=>24);assert(multiline.height>=124.8);
+const image={kind:'image'};assert(fitTextBounds(image,()=>0)===image);
+const enormous=fitTextBounds({...original,font_size:1000,text:'x'},()=>100000);assert(enormous.width===50000);
+const unicode=fitTextBounds({...original,text:'😀字',char_spacing:5},()=>20);assert(unicode.width===37);
+console.log('Text growth, multiline, source preservation, image guard, geometry cap and Unicode tracking: passed');

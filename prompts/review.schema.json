@@ -1,0 +1,23 @@
+{
+ "type":"object",
+ "additionalProperties":false,
+ "required":["round_id","reviewed_pages","verdict","issues","unverified"],
+ "properties":{
+  "round_id":{"type":"string"},
+  "reviewed_pages":{"type":"array","items":{"type":"integer","minimum":1}},
+  "verdict":{"enum":["pass","needs_repair","unknown"]},
+  "unverified":{"type":"array","items":{"type":"string"}},
+  "issues":{"type":"array","items":{"type":"object","additionalProperties":false,
+   "required":["page","category","severity","region","observation","evidence","hypothesis","local_action","needs_model","confidence"],
+   "properties":{
+    "page":{"type":"integer","minimum":1},
+    "category":{"enum":["content","geometry","font","clip_mask","paint_order","editability","residual","inferred_content"]},
+    "severity":{"enum":["critical","major","minor"]},
+    "region":{"type":"array","minItems":4,"maxItems":4,"items":{"type":"number","minimum":0,"maximum":1}},
+    "observation":{"type":"string"},"evidence":{"type":"string"},"hypothesis":{"type":"string"},
+    "local_action":{"enum":["fix_paint_order","preserve_clip_mask","fix_font_mapping","fix_text_geometry","extract_local_ocr","split_local_mask","repair_local_background","manual_review","request_cropped_model"]},
+    "needs_model":{"type":"boolean"},"confidence":{"type":"number","minimum":0,"maximum":1}
+   }
+  }}
+ }
+}
